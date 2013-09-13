@@ -1,0 +1,179 @@
+% I modified this from a cheatsheet I got at
+% http://stdout.org/~winston/latex/
+
+% This is the first time I've used tex, so
+% I am sure I got a lot of details wrong.
+% If you could improve it in some way, please
+% fork away.
+
+\documentclass[10pt,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+
+
+\pdfinfo{
+  /Title (HttpRequest)
+  /Author (@prismic)
+  /Subject (Django Commonly Used)
+  /Keywords (django,httprequest,user model)}
+
+% This sets page margins to .5 inch if using letter paper, and to 1cm
+% if using A4 paper. (This probably isn't strictly necessary.)
+% If using another size paper, use default 1cm margins.
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+    {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+    }
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols}{2}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Useful Django Stuff}} \\
+\end{center}
+
+%---------------------------------------
+
+\section{HttpRequest}
+\subsection{Attributes}
+\begin{tabular}{@{}ll@{}}
+\verb!body!	 		& string \\
+\verb!path!			& string \\
+\verb!path_info!	& string \\
+\verb!method!		& string \\
+\verb!encoding!		& string \\
+\verb!GET!			& QueryDict \\
+\verb!POST!			& QueryDict \\
+\verb!request!		& QueryDict \\
+\verb!COOKIES!		& dict \\
+\verb!FILES!		& QueryDict \\
+\verb!META!			& dict \\
+\verb!user!			& obj: \{AUTH\_USER\_MODEL\} or \\
+					& \{auth.models.AnonymousUser\} \\
+\verb!session!		& QueryDict \\
+\verb!resolver_match!& obj: \{ResolverMatch\} \\
+\end{tabular}
+
+\subsection{Methods}
+\begin{tabular}{@{}ll@{}}
+\verb!get_host!			& () \\
+\verb!get_full_path!	& () \\
+\verb!build_absolute_uri!& (location) \\
+\verb!get_signed_cookie!& (key, default=RAISE\_ERROR, \\
+						& salt='', max\_age=None) \\
+\verb!is_secure!		& () \\
+\verb!is_ajax!			& () \\
+\verb!read!				& (size=None) \\
+\verb!readline!			& () \\
+\verb!readlines!		& () \\
+\verb!xreadlines!		& () \\
+\verb!__iter__!			& () \\
+\end{tabular}
+
+%----------------------------------
+
+\section{UploadedFile}
+\subsection{Attributes}
+\begin{tabular}{@{}ll@{}}
+\verb!name!				& string \\
+\verb!size!				& string \\
+\end{tabular}
+
+\subsection{Methods}
+\begin{tabular}{@{}ll@{}}
+\verb!chunks!			& (chunk\_size=None) \\
+\verb!read!				& (num\_bytes=None) \\
+\end{tabular}
+
+\columnbreak
+
+%-----------------------------------
+
+\section{models.User}
+\subsection{Fields}
+\begin{tabular}{@{}ll@{}}
+\verb!username!			& string \\
+\verb!first_name!		& string \\
+\verb!last_name!		& string \\
+\verb!email!			& string \\
+\verb!password!			& string \\
+\verb!groups!			& models.Group \\
+\verb!user_permissions!& models.Permission \\
+\verb!is_staff!			& boolean \\
+\verb!is_active!		& boolean \\
+\verb!is_superuser!	& boolean \\
+\verb!last_login!		& datetime \\
+\verb!date_joined!		& datetime \\
+\end{tabular}
+
+\subsection{Methods}
+\begin{tabular}{@{}ll@{}}
+\verb!get_username!			& () \\
+\verb!is_anonymous!			& () \\
+\verb!is_authenticated!		& () \\
+\verb!get_full_name!			& () \\
+\verb!set_password!			& (raw\_password) \\
+\verb!check_password!			& (raw\_password) \\
+\verb!set_unusable_password!	& () \\
+\verb!has_usable_password!		& () \\
+\verb!get_group_permissions!	& (obj=None) \\
+\verb!get_all_permissions!		& (obj=None) \\
+\verb!has_perm!					& (perm, obj=None) \\
+\verb!has_perms!				& (perm\_list, obj=None) \\
+\verb!email_user!				& (subject, message, \\
+								& from\_email=None, **kwargs) \\
+\end{tabular}
+
+
+\end{multicols}
+\end{document}
