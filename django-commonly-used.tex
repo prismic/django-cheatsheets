@@ -35,6 +35,9 @@
 % Turn off header and footer
 \pagestyle{empty}
 
+\newlength{\MyLen}
+\settowidth{\MyLen}{\texttt{letterpaper}/\texttt{a4paper} \ }
+
 % Redefine section commands to use less space
 \makeatletter
 \renewcommand{\section}{\@startsection{section}{1}{0mm}%
@@ -67,7 +70,7 @@
 \begin{document}
 \raggedright
 \footnotesize
-\begin{multicols}{2}
+\begin{multicols}{3}
 
 
 % multicol parameters
@@ -79,14 +82,18 @@
 \setlength{\columnsep}{2pt}
 
 \begin{center}
-     \Large{\underline{Useful Django Stuff}} \\
+     \Large{\underline{Common Django Reference}} \\
 \end{center}
 
 %---------------------------------------
 
 \section{HttpRequest}
 \subsection{Attributes}
-\begin{tabular}{@{}ll@{}}
+
+\begin{tabular}{@{}p{\the\MyLen}@{}p{\the\MyLen}}
+\hline
+Name				& Type \\
+\hline
 \verb!body!	 		& string \\
 \verb!path!			& string \\
 \verb!path_info!	& string \\
@@ -98,50 +105,60 @@
 \verb!COOKIES!		& dict \\
 \verb!FILES!		& QueryDict \\
 \verb!META!			& dict \\
-\verb!user!			& obj: \{AUTH\_USER\_MODEL\} or \\
-					& \{auth.models.AnonymousUser\} \\
+\verb!user!			& obj: \texttt{AUTH\_USER\_MODEL} or
+					\texttt{auth.models.AnonymousUser} \\
 \verb!session!		& QueryDict \\
 \verb!resolver_match!& obj: \{ResolverMatch\} \\
 \end{tabular}
 
+All QueryDict objects can be manipulated like a dictionary, with some additional methods. See official docs.
+
 \subsection{Methods}
-\begin{tabular}{@{}ll@{}}
-\verb!get_host!			& () \\
-\verb!get_full_path!	& () \\
-\verb!build_absolute_uri!& (location) \\
-\verb!get_signed_cookie!& (key, default=RAISE\_ERROR, \\
-						& salt='', max\_age=None) \\
-\verb!is_secure!		& () \\
-\verb!is_ajax!			& () \\
-\verb!read!				& (size=None) \\
-\verb!readline!			& () \\
-\verb!readlines!		& () \\
-\verb!xreadlines!		& () \\
-\verb!__iter__!			& () \\
+\begin{tabular}{@{}p{\the\MyLen}@{}p{\the\MyLen}}
+\hline
+Name								& Returns \\
+\hline
+\verb!get_host()!					& Originating Host \\
+\verb!get_full_path()!				& URL plus query string \\
+\verb!build_absolute_uri(location)!\\
+									 & Absolute version of \texttt{get\_full\_path} \\
+\verb!get_signed_cookie(key,! \\
+\verb!default=RAISE_ERROR, salt=`',! \\
+\verb!max_age=None)!				& Cookie value for a signed cookie \\
+\verb!is_secure()!					& True if in HTTPS \\
+\verb!is_ajax()!					& True if ajax request\\
 \end{tabular}
 
 %----------------------------------
 
 \section{UploadedFile}
 \subsection{Attributes}
-\begin{tabular}{@{}ll@{}}
+\begin{tabular}{@{}p{\the\MyLen}@{}p{\the\MyLen}}
+\hline
+Name					& Type \\
+\hline
 \verb!name!				& string \\
 \verb!size!				& string \\
 \end{tabular}
 
 \subsection{Methods}
-\begin{tabular}{@{}ll@{}}
-\verb!chunks!			& (chunk\_size=None) \\
-\verb!read!				& (num\_bytes=None) \\
+\begin{tabular}{@{}p{\the\MyLen}@{}p{\the\MyLen}}
+\hline
+Name & \\
+\hline
+\verb!chunks(chunk_size=None)! \\
+\verb!read(num_bytes=None)! \\
 \end{tabular}
 
 \columnbreak
-
 %-----------------------------------
 
 \section{models.User}
 \subsection{Fields}
-\begin{tabular}{@{}ll@{}}
+\begin{tabular}{@{}p{\the\MyLen}@{}p{\the\MyLen}}
+\hline
+Name					& Type \\
+\hline
 \verb!username!			& string \\
 \verb!first_name!		& string \\
 \verb!last_name!		& string \\
@@ -157,22 +174,97 @@
 \end{tabular}
 
 \subsection{Methods}
-\begin{tabular}{@{}ll@{}}
-\verb!get_username!			& () \\
-\verb!is_anonymous!			& () \\
-\verb!is_authenticated!		& () \\
-\verb!get_full_name!			& () \\
-\verb!set_password!			& (raw\_password) \\
-\verb!check_password!			& (raw\_password) \\
-\verb!set_unusable_password!	& () \\
-\verb!has_usable_password!		& () \\
-\verb!get_group_permissions!	& (obj=None) \\
-\verb!get_all_permissions!		& (obj=None) \\
-\verb!has_perm!					& (perm, obj=None) \\
-\verb!has_perms!				& (perm\_list, obj=None) \\
-\verb!email_user!				& (subject, message, \\
-								& from\_email=None, **kwargs) \\
+\begin{tabular}{@{}p{\the\MyLen}@{}p{\the\MyLen}}
+\hline
+Name							& Returns \\
+\hline
+\verb!get_username()! \\
+\verb!is_anonymous()!			& \\
+\verb!is_authenticated()!		& \\
+\verb!get_full_name()!			& \\
+\verb!set_password(raw_password)!			&  \\
+\verb!check_password(raw_password)!			&  \\
+\verb!set_unusable_password()!	& \\
+\verb!has_usable_password()!		& \\
+\verb!get_group_permissions(obj=None)!	&  \\
+\verb!get_all_permissions(obj=None)!		&  \\
+\verb!has_perm(perm, obj=None)!					&  \\
+\verb!has_perms(perm_list, obj=None)!				&  \\
+\verb!email_user(subject, message, from_email=None, **kwargs)!  \\
 \end{tabular}
+
+\section{django.contrib.auth}
+\subsection{Methods}
+\begin{tabular}{@{}p{\the\MyLen}@{}p{\the\MyLen}}
+\hline
+Name										& Returns \\
+\hline
+\verb!authenticate(username, password)!	&  \\
+\verb!login(request, user)!				&  \\
+\verb!logout(request)!						&  \\
+\end{tabular}
+
+
+\section{django.forms}
+\subsection{Attributes}
+\begin{tabular}{@{}p{\the\MyLen}@{}p{\the\MyLen}}
+\hline
+Name										& Type \\
+\hline
+\verb!is_bound!									& boolean \\
+\verb!errors!										& dict \\
+\verb!cleaned_data!								& dict \\
+\verb!error_css_class!								& string \\
+\verb!required_css_class!							& string \\
+\verb!label_suffix!							& string \\
+\end{tabular}
+
+
+\subsection{Methods}
+\begin{tabular}{@{}p{\the\MyLen}@{}p{\the\MyLen}}
+\hline
+Name										& Returns \\
+\hline
+\verb!is_valid()!							&  \\
+\verb!as_p()!								&  \\
+\verb!as_ul()!								&  \\
+\verb!as_table()!							&  \\
+\verb!is_multipart()!						& \\
+
+\end{tabular}
+
+\section{Decorators}
+\subsection{django.views.decorators.http}
+\verb!condition(etag_func=None, last_modified_func=None)!
+\verb!etag(etag_func)!
+\verb!last_modified(last_modified_func)!
+\verb!require_http_methods(request_method_list)!
+\verb!require_GET()!
+\verb!require_POST()!
+\verb!require_safe()!
+\verb!gzip_page()!
+\verb!vary_on_cookie(func)!
+\verb!vary_on_headers(*headers)!
+
+\subsection{django.views.decorators.debug}
+\verb!sensitive_variables(*variables)!
+\verb!sensitive_post_parameters(*parameters)!
+
+\subsection{django.views.decorators.clickjacking}
+\verb!xframe_options_exempt()!
+\verb!xframe_options_deny()!
+\verb!xframe_options_sameorigin()!
+
+\subsection{django.views.decorators.csrf}
+\verb!csrf_protect()!
+\verb!csrf_exempt()!
+\verb!requires_csrf_token()!
+\verb!ensure_csrf_cookie(view)!
+
+\subsection{django.contrib.auth.decorators}
+\verb!login_required([redirect_field_name=REDIRECT_FIELD_NAME, login_url=None])!
+\verb!user_passes_test(func[, login_url=None])!
+\verb!permission_required([login_url=None, raise_exception=False])!
 
 
 \end{multicols}
